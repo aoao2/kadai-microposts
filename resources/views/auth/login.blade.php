@@ -17,7 +17,7 @@
                 </div>
                 {!! Form::submit('Log in', ['class' => 'btn btn-primary btn-block']) !!}
             {!! Form::close() !!}
-            <p>New user? {!! link_to_route('signup.get', 'Sign up now!' !!}</p>
+            <p>New user? {!! link_to_route('signup.get', 'Sign up now!') !!}</p>
         </div>
     </div>
 @endsection
