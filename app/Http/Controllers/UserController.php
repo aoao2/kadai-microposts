@@ -17,7 +17,16 @@ class UserController extends Controller
     
     public function show($id) {
         $user = User::find($id);
-        return view('user.show', [
-            'user_s' => $user]);
+        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(3);
+        $count_microposts = $user->microposts()->count();
+        
+        $data = [
+            'user_s' => $user,
+            'microposts_s' => $microposts
+        ];
+        
+        $data += $this->counts($user);
+        
+        return view('user.show', $data);
     }
 }

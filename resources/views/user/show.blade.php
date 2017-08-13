@@ -14,10 +14,13 @@
         </aside>
         <div class="col-xs-8">
             <ul class="nav nav-tabs nav-justified">
-                <li><a href="#">Microposts</a></li>
+                <li role="presentation" class="{{ Request::is('users/' . $user_s->id) ? 'active' : '' }}"><a href="{{ route('users.show', ['id' => $user_s->id]) }}"><a href="{{ route('users.show', ['id' => $user_s->id]) }}">Microposts <span class="badge">{{ $count_microposts }}</span></a></li>
                 <li><a href="#">Followings</a></li>
                 <li><a href="#">Followers</a></li>
             </ul>
+            @if (count($microposts_s) >0)
+                @include ('micropost.micropost', ['microposts_t' => $microposts_s])
+            @endif
         </div>
     </div>
 @endsection
