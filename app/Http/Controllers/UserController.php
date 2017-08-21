@@ -29,4 +29,32 @@ class UserController extends Controller
         
         return view('user.show', $data);
     }
+    
+    public function following($id) {
+        $user = User::find($id);
+        $following = $user->followings()->paginate(3);
+        
+        $data = [
+            'user_u' => $user,
+            'user_f' => $following
+        ];
+        
+        $data += $this->counts($user);
+        
+        return view('user.following', $data);
+    }
+    
+    public function follower($id) {
+        $user = User::find($id);
+        $follower = $user->followers()->paginate(3);
+        
+        $data = [
+            'user_u' => $user,
+            'user_f' => $follower
+        ];
+        
+        $data += $this->counts($user);
+        
+        return view('user.follower', $data);
+    }
 }

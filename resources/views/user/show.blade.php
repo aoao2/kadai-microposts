@@ -11,14 +11,15 @@
                     <img class="media-object img-rounded img-responsive" src="{{ Gravatar::src($user_s->email, 500) }}" alt="">
                 </div>
             </div>
+            @include('user_follow.follow_button', ['user' => $user_s])
         </aside>
         <div class="col-xs-8">
             <ul class="nav nav-tabs nav-justified">
-                <li role="presentation" class="{{ Request::is('users/' . $user_s->id) ? 'active' : '' }}"><a href="{{ route('users.show', ['id' => $user_s->id]) }}"><a href="{{ route('users.show', ['id' => $user_s->id]) }}">Microposts <span class="badge">{{ $count_microposts }}</span></a></li>
-                <li><a href="#">Followings</a></li>
-                <li><a href="#">Followers</a></li>
+                <li role="presentation" class="{{ Request::is('users/' . $user_s->id) ? 'active' : '' }}"><a href="{{ route('users.show', ['id' => $user_s->id]) }}">Microposts <span class="badge">{{ $count_microposts }}</span></a></li>
+                <li role="presentation" class="{{ Request::is('users/*/followings') ? 'active' : '' }}"><a href="{{ route('user.following', ['id' => $user_s->id]) }}">Followings <span class="badge">{{ $count_following }}</span></a></li>
+                <li role="presentation" class="{{ Request::is('users/*/followers') ? 'active' : '' }}"><a href="{{ route('user.follower', ['id' => $user_s->id]) }}">Followers <span class="badge">{{ $count_follower }}</span></a></li>
             </ul>
-            @if (count($microposts_s) >0)
+            @if (count($microposts_s) > 0)
                 @include ('micropost.micropost', ['microposts_t' => $microposts_s])
             @endif
         </div>
