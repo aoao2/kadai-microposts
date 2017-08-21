@@ -76,4 +76,10 @@ class User extends Model implements AuthenticatableContract,
     public function is_following($userId) {
         return $this->followings()->where('follow_id', $userId)->exists();
     }
+    
+    public function feed_microposts() {
+        $following_id = $this->followings()->lists('users.id')->toArray();
+        $following_id[] = $this->id;
+        return Micropost::wherein('user_id', $following_id);
+    }
 }
