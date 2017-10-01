@@ -10,29 +10,29 @@ use App\User;
 class UserController extends Controller
 {
     public function index() {
-        $users = User::paginate(3);
+        $users = User::paginate(10);
         return view('user.index', [
-            'user_p' => $users]);
+            'users' => $users]);
     }
     
     public function show($id) {
         $user = User::find($id);
-        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(3);
+        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
         $count_microposts = $user->microposts()->count();
         
         $data = [
-            'user_s' => $user,
-            'microposts_s' => $microposts
+            'user' => $user,
+            'microposts' => $microposts
         ];
         
         $data += $this->counts($user);
         
-        return view('user.show', $data);
+            return view('user.show', $data);
     }
     
     public function following($id) {
         $user = User::find($id);
-        $following = $user->followings()->paginate(3);
+        $following = $user->followings()->paginate(10);
         
         $data = [
             'user_u' => $user,
@@ -46,7 +46,7 @@ class UserController extends Controller
     
     public function follower($id) {
         $user = User::find($id);
-        $follower = $user->followers()->paginate(3);
+        $follower = $user->followers()->paginate(10);
         
         $data = [
             'user_u' => $user,
@@ -56,5 +56,16 @@ class UserController extends Controller
         $data += $this->counts($user);
         
         return view('user.follower', $data);
+    }
+    
+    public function liking() {
+        $user = \Auth::user();
+        $microposts = $user->liking()->orderBy('created_at', 'desc')->paginate(10);
+        
+        $data = [
+            'user' => $user,
+            'microposts' => $microposts];
+        
+        return view('user.liking', $data);
     }
 }

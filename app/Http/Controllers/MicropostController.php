@@ -46,7 +46,7 @@ class MicropostController extends Controller
         $request->user()->microposts()->create([
             'content' => $request->content
         ]);
-        
+    
         return redirect('/');
     }
 

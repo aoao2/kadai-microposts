@@ -82,4 +82,31 @@ class User extends Model implements AuthenticatableContract,
         $following_id[] = $this->id;
         return Micropost::wherein('user_id', $following_id);
     }
+    
+    public function liking() {
+        return $this->belongsToMany(Micropost::class, 'favorite', 'user_id', 'micropost_id')->withTimestamps();
+    }
+    
+    public function like($micropostId) {
+        $exist = $this->like_item($micropostId);
+        if ($exist) {
+            return false;
+        } else {
+            $this->liking()->attach($micropostId);
+        }
+    }
+    
+    public function unlike($micropostId) {
+        $exist = $this->like_item($micropostId);
+        if ($exist) {
+            $this->liking()->detach($micropostId);
+        } else {
+            return false;
+        }
+    }
+    
+    public function like_item($micropostId) {
+        return $this->liking()->where('micropost_id', $micropostId)->exists();
+    }
+    
 }

@@ -19,7 +19,7 @@
                 <li role="presentation" class="{{ Request::is('users/*/following') ? 'active' : '' }}"><a href="{{ route('user.following', ['id' => $user_u->id]) }}">Followings <span class="badge">{{ $count_following }}</span></a></li>
                 <li role="presentation" class="{{ Request::is('users/*/follower') ? 'active' : '' }}"><a href="{{ route('user.follower', ['id' => $user_u->id]) }}">Followers <span class="badge">{{ $count_follower }}</span></a></li>
             </ul>
-            @include ('user.user', ['user_a' => $user_f])
+            @include ('user.user', ['users' => $user_f])
         </div>
     </div>
 @endsection

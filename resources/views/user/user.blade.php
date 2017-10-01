@@ -1,6 +1,6 @@
-@if (count($user_a) > 0)
+@if (count($users) > 0)
 <ul class="media-list">
-@foreach ($user_a as $user)
+@foreach ($users as $user)
     <li class="media">
         <div class="media-left">
             <img class="media-object img-rounded" src="{{ Gravatar::src($user->email, 50) }}" alt="">
@@ -14,5 +14,5 @@
     </li>
 @endforeach
 </ul>
-{!! $user_a->render() !!}
+{!! $users->render() !!}
 @endif
